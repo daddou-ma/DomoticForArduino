@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #include "DigitalDHTPin.h"
 
 
@@ -13,8 +15,8 @@ float DigitalDHTPin::getHumidity() {
   return this->value.humidity;
 }
 
-bool DigitalDHTPin::initPin() 
+bool DigitalDHTPin::initPin()
 {
     // TODO
+    return false;
 }
-

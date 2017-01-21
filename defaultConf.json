@@ -1,0 +1,17 @@
+{
+  "timer" : 3,
+  "pins"  : [
+    {
+      "name"    : "PIN 01",
+      "number"  : 2,
+      "type"    : "DIGITAL_OUTPUT",
+      "enabled" : true
+    },
+    {
+      "name"    : "PIN 01",
+      "number"  : "A2",
+      "type"    : "ANALOG_INPUT",
+      "enabled" : true
+    }
+  ],
+}

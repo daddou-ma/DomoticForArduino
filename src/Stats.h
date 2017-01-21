@@ -2,41 +2,24 @@
 #define Stats_H
 
 #include <Arduino.h>
-#include <ArduinoJson.h>
-#include "./Pin/Pin.h"
 #include "Config.h"
+#include "JsonHelper.h"
 
 class Stats {
 
+public:
   static Pin  pinsArray[COUNT_PIN];
   static Pin  tempArray[COUNT_PIN];
   static bool pinsStats[COUNT_PIN];
   static int  timer;
 
-  static bool setStats(JsonObject& json) {
-    // TODO : verification of validation of a json
+  static bool setStats(JsonObject& json);
 
-    timer = json["timer"];
-    JsonArray& pins = json["pins"];
+  static JsonObject& getStats();
 
-    for (int i = 0; i < pins.size(); i++) {
-      Pin pin = Pin(pins[i]["name"], pins[i]["number"],pins[i]["Type"]);
-      tempArray[i] = pin;
-    }
+  static bool initStats(JsonObject& json);
 
-    return 0;
-  }
-
-  static JsonObject& getStats() {
-    // TODO
-
-  }
-
-  static void resetStats() {
-    for (int i = 0; i < COUNT_PIN; i++) {
-
-    }
-  }
+  static void resetStats();
 };
 
 #endif

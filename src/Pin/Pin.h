@@ -3,17 +3,18 @@
 
 #include <Arduino.h>
 
-enum PinType {DIGITAL_OUTPUT, ANALOG_INPUT, SWITCH_OUTPUT, REMOTE_LED_OUTPUT, DHT11_INPUT, TEMPERATURE_ANALOG_INPUT, HUMIDITY_ANALOG_INPUT};
+enum PinType {DIGITAL_OUTPUT, ANALOG_INPUT, REMOTE_LED_OUTPUT, DHT11_INPUT, TEMPERATURE_ANALOG_INPUT, HUMIDITY_ANALOG_INPUT, NullType};
 
 class Pin {
-  protected:
+  public:
     String   name;
     int  number;  // Pin Number
+    int  value;  // Pin Number
     PinType  type;    // Type of Pin (INPUT or OUTPUT)
     bool     enabled; // is The Pin Enabled
 
-  public:
     Pin(String , int , PinType);
+    static PinType getPinTypeFromString(String type);
 };
 
 #endif // Pin_H

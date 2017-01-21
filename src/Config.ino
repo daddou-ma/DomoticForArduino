@@ -2,6 +2,7 @@
 
 #include "Config.h"
 
+String Config::id    = "000000AA";
 int Config::timer    = TIMER;
 int Config::startPin = START_PIN;
 int Config::countPin = COUNT_PIN;

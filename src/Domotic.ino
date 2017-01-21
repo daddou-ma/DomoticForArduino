@@ -1,12 +1,12 @@
-#include <Arduino.h>
-
 #define ARDUINOJSON_ENABLE_ARDUINO_STREAM 0
 
+#include <Arduino.h>
 #include "JsonHelper.h"
 #include "Commands.h"
 #include "./Pin/Pin.h"
 #include "Config.h"
-
+#include "Response.h"
+#include "Stats.h"
 
 const String ID       = "HH10225";
 bool connected  = false;
@@ -20,12 +20,22 @@ void setup() {
   while(!Serial) {}
 
   while(!connected) {
-    Serial.print(ID);
+    Response::requestConfig();
+
+    // Waiting For Configuration From Serial Port
     while (Serial.available() > 0) {
-        delay(2500);
-        String a = Serial.readStringUntil('\n');
+      String text = Serial.readString();
+
+      JsonObject& json = JsonHelper::getJson(text);
+
+      if (!json.success()) {
+        // TODO : Error Message
+        Response::error("Non Valid Json Object");
+      }
+      else {
+        Response::success("Valid JSON Received");
         connected = true;
-        Serial.println("READ CHAR i : " + a);
+      }
     }
     delay(500);
   }
@@ -56,20 +66,12 @@ void loop() {
   }*/
 
   if (Serial.available() > 0) {
-    String text = "";
-    while(Serial.available() > 0) {
-      char character = Serial.read();
-      text.concat(character);
-    }
+    String text = Serial.readString();
 
     JsonObject& json = JsonHelper::getJson(text);
 
-    Serial.println();
-    Serial.println("Text : " + text);
-    Serial.println();
-    //json.printTo(Serial);
 
-    /*if (!json.success()) {
+    if (!json.success()) {
       // TODO : Error Message
       Serial.println("NOT JSON");
       return;
@@ -104,15 +106,12 @@ void loop() {
         // TODO : Error Message
         Serial.println("Unknown Command");
         break;
-    }*/
+    }
   }
+
+  JsonObject& stats = Stats::getStats();
+  stats.printTo(Serial);
 
   Serial.println("Waiting");
   delay(1000);
-  /*digitalWrite(i, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(1000);               // wait for a second
-  digitalWrite(i, LOW);    // turn the LED off by making the voltage LOW
-  delay(1000);
-  i = (i < TIMER) ? i+1:0;
-  */
 }

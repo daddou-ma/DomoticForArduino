@@ -1,6 +1,8 @@
 #ifndef Config_H
 #define Config_H
 
+#include <Arduino.h>
+
 #define TIMER               3
 #define START_PIN           0
 #define COUNT_PIN           20
@@ -16,6 +18,7 @@ class Config
 {
 public:
 
+    static String id;
     static int    timer;
     static int    startPin;
     static int    countPin;

@@ -1,14 +1,13 @@
 #define ARDUINOJSON_ENABLE_ARDUINO_STREAM 0
 
 #include <Arduino.h>
+#include "./Pin/Pin.ino" // Keep It [Error : linker undefined reference to Pin::Pin]
 #include "JsonHelper.h"
 #include "Commands.h"
-#include "./Pin/Pin.h"
 #include "Config.h"
 #include "Response.h"
 #include "Stats.h"
 
-const String ID       = "HH10225";
 bool connected  = false;
 
 int 		i = 0;
@@ -30,10 +29,10 @@ void setup() {
 
       if (!json.success()) {
         // TODO : Error Message
-        Response::error("Non Valid Json Object");
+        Response::error("UnValid Config Msg");
       }
       else {
-        Response::success("Valid JSON Received");
+        Response::success("Moved to Loop");
         connected = true;
       }
     }
@@ -109,9 +108,13 @@ void loop() {
     }
   }
 
-  JsonObject& stats = Stats::getStats();
-  stats.printTo(Serial);
+  if(i % Stats::timer == 0)
+  {
+    JsonObject& stats = Stats::getStats();
+    stats.printTo(Serial);
+  }
 
-  Serial.println("Waiting");
+  i++;
+
   delay(1000);
 }

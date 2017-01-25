@@ -3,23 +3,18 @@
 
 #include "Pin.h"
 
-Pin::Pin(String name, int number, PinType type)
+Pin::Pin(uint8_t number, PinType type)
 {
-  this->name = name;
   this->number = number;
   this->type = type;
-  this->value = 0;
 }
 
 PinType Pin::getPinTypeFromString(String type) {
   if (type == "DIGITAL_OUTPUT") {
     return DIGITAL_OUTPUT;
   }
-  else if (Type == "ANALOG_INPUT") {
+  else if (type == "ANALOG_INPUT") {
     return ANALOG_INPUT;
-  }
-  else if (type == "SWITCH_OUTPUT") {
-    return SWITCH_OUTPUT;
   }
   else if (type == "REMOTE_LED_OUTPUT") {
     return REMOTE_LED_OUTPUT;

@@ -12,17 +12,16 @@ JsonObject& JsonHelper::getJson(String text) {
 
 Pin JsonHelper::jsonToPin(JsonObject& json) {
   // TODO
-  Pin pin = Pin(json["name"], json["number"], Pin::getPinTypeFromString(json["type"]));
+  Pin pin = Pin(json["number"], Pin::getPinTypeFromString(json["type"]));
   return pin;
 }
 
 JsonObject& JsonHelper::pinToJson(Pin pin) {
   // TODO
-  StaticJsonBuffer<255> jsonBuffer;
+  StaticJsonBuffer<50> jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();
-  //root["name"] = pin.name;
-  //root["type"] = pin.type;
-  //root["value"] = pin.value;
+  root["type"] = pin.type;
+  root["value"] = pin.value;
 
   return root;
 }
@@ -37,7 +36,7 @@ bool JsonHelper::haveCommand(JsonObject& json){
 
 bool JsonHelper::isPin(JsonObject& json){
   // TODO
-  if (json.containsKey("name") && json.containsKey("number") && json.containsKey("type")) {
+  if (json.containsKey("number") && json.containsKey("type")) {
     return true;
   }
   return false;

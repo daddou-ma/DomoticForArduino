@@ -9,7 +9,6 @@ class Stats {
 
 public:
   static Pin  pinsArray[COUNT_PIN];
-  static Pin  tempArray[COUNT_PIN];
   static bool pinsStats[COUNT_PIN];
   static int  timer;
 

@@ -3,15 +3,12 @@
 #include "Config.h"
 
 String Config::id    = "000000AA";
-int Config::timer    = TIMER;
-int Config::startPin = START_PIN;
-int Config::countPin = COUNT_PIN;
+uint8_t Config::timer    = TIMER;
+uint8_t Config::startPin = START_PIN;
+uint8_t Config::countPin = COUNT_PIN;
 
-int Config::digitalPinCount   = DIGITAL_PIN_COUNT;
-int Config::analogPinCount    = ANALOG_PIN_COUNT;
-int Config::reservedPinCount  = RESERVED_PIN_COUNT;
 
-DataTypePin Config::getPinTypeByNumber(int pin) {
+DataTypePin Config::getPinTypeByNumber(uint8_t pin) {
 
   switch (pin) {
     case 0:

@@ -19,14 +19,11 @@ class Config
 public:
 
     static String id;
-    static int    timer;
-    static int    startPin;
-    static int    countPin;
-    static int    digitalPinCount;
-    static int    analogPinCount;
-    static int    reservedPinCount;
+    static uint8_t    timer;
+    static uint8_t    startPin;
+    static uint8_t    countPin;
 
-    static DataTypePin getPinTypeByNumber(int pin);
+    static DataTypePin getPinTypeByNumber(uint8_t pin);
 };
 
 #endif // Config_H

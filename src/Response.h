@@ -12,42 +12,22 @@ enum StatusCode:int {
 class Response {
   public:
     static void requestConfig() {
-      StaticJsonBuffer<100> jsonBuffer;
+      StaticJsonBuffer<50> jsonBuffer;
 
       JsonObject& root  = jsonBuffer.createObject();
-      root["status"]    = (int) Config;
+      root["status"]    = (uint8_t) Config;
       root["arduino"]   = "arduino_uno";
       root["id"]        = Config::id;
 
       root.printTo(Serial);
     }
 
-    static void success(String msg) {
-      StaticJsonBuffer<100> jsonBuffer;
+    static void message(StatusCode code, int request) {
+      StaticJsonBuffer<50> jsonBuffer;
 
       JsonObject& root = jsonBuffer.createObject();
-      root["status"]    = (int) Success;
-      root["req"] = msg;
-
-      root.printTo(Serial);
-    }
-
-    static void error(String msg) {
-      StaticJsonBuffer<100> jsonBuffer;
-
-      JsonObject& root = jsonBuffer.createObject();
-      root["status"]    = (int) Error;
-      root["req"] = msg;
-
-      root.printTo(Serial);
-    }
-
-    static void jsonError(String msg) {
-      StaticJsonBuffer<100> jsonBuffer;
-
-      JsonObject& root = jsonBuffer.createObject();
-      root["status"]    = (int) JsonError;
-      root["req"] = msg;
+      root["status"]    = (uint8_t) code;
+      root["req"] = request;
 
       root.printTo(Serial);
     }

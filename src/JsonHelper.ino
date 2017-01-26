@@ -10,13 +10,13 @@ JsonObject& JsonHelper::getJson(String text) {
 }
 
 Pin JsonHelper::jsonToPin(JsonObject& json) {
-  int number    = json["number"];
-  int type      = json["type"];
+  uint8_t number    = json["number"];
+  uint8_t type      = json["type"];
 
   switch ((PinType) type) {
     case DIGITAL_OUTPUT:
     {
-      int value = json["value"];
+      uint8_t value = json["value"];
       DigitalOutputPin pin = DigitalOutputPin(number);
       pin.setValue(value);
       return pin;
@@ -24,7 +24,7 @@ Pin JsonHelper::jsonToPin(JsonObject& json) {
     break;
     case ANALOG_INPUT:
     {
-      int  analogType = (int) json["analog_type"];
+      uint8_t  analogType = (uint8_t) json["analog_type"];
       AnalogInputPin pin = AnalogInputPin(number, (AnalogInputType) analogType);
       return pin;
     }
@@ -47,7 +47,7 @@ JsonObject& JsonHelper::pinToJson(Pin pin) {
   JsonObject& root = jsonBuffer.createObject();
 
   root["number"]  = pin.number;
-  root["type"]    = (int)pin.type;
+  root["type"]    = (uint8_t)pin.type;
 
   switch (pin.type) {
     case DIGITAL_OUTPUT:
@@ -108,7 +108,7 @@ bool JsonHelper::isPin(JsonObject& json){
   }
 
   // Verify Pin according to his type
-  int type = (int) json["type"];
+  uint8_t type = (uint8_t) json["type"];
   switch ((PinType) type) {
     case DIGITAL_OUTPUT:
       // Do Nothing (Return true)

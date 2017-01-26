@@ -23,13 +23,13 @@ void Commands::execCommand(CommandEnum command, JsonObject& json) {
 void Commands::initStats(JsonObject& json) {
   if (JsonHelper::isValidInitStatsCommand(json)) {
     if (Stats::initStats(json)) {
-      Response::success("Stats Init Done");
+      Response::message(StatusCode::Success, 0);
     }
     else {
-      Response::success("Error in initStats");
+      Response::message(StatusCode::Error, 0);
     }
   }
   else {
-    Response::success("Unvalid Json !");
+    Response::message(StatusCode::JsonError, 0);
   }
 }

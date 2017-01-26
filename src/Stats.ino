@@ -43,8 +43,8 @@ bool Stats::initStats(JsonObject& json) {
   for (unsigned int i = 0; i < pins.size(); i++) {
     if (JsonHelper::isPin(pins[i]))
     {
-      int number = json["number"];
-      int type   = json["type"];
+      uint8_t number = json["number"];
+      uint8_t type   = json["type"];
       Pin pin = Pin(number, (PinType)type);
     }
     else {

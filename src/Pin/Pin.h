@@ -8,7 +8,7 @@ enum PinType:int {DIGITAL_OUTPUT = 0, ANALOG_INPUT = 1, DHT_INPUT = 2, NullType 
 class Pin {
   public:
     uint8_t  number;  // Pin Number
-    uint16_t  value;  // Pin Number
+    uint8_t  value;  // Pin Number
     PinType  type;    // Type of Pin (INPUT or OUTPUT)
 
     Pin(uint8_t , PinType);

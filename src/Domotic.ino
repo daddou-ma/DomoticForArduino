@@ -10,7 +10,7 @@
 
 bool connected  = false;
 
-int 		i = 0;
+uint8_t 		i = 0;
 //Pin 		pins[PIN_COUNT];
 
 // the setup routine runs once when you press reset:
@@ -23,24 +23,19 @@ void setup() {
 
     // Waiting For Configuration From Serial Port
     while (Serial.available() > 0) {
-      String text = Serial.readString();
+
+      String text = Serial.readStrin
 
       JsonObject& json = JsonHelper::getJson(text);
 
       if (!json.success()) {
         // TODO : Error Message
-        Response::error("UnValid Json Sent");
+        Response::message(StatusCode::JsonError, 0);
       }
       else {
-        if (JsonHelper::isValidInitStatsCommand(json))
-        {
-          int command = json["command"];
-          Commands::execCommand((CommandEnum)command, json);
-          connected = true;
-        }
-        else {
-          Response::error("UnValid Init Stats Command");
-        }
+        int command = json["command"];
+        Commands::execCommand((CommandEnum)command, json);
+        connected = true;
       }
     }
     delay(500);

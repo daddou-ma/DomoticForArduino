@@ -3,7 +3,13 @@
 #include "AnalogInputPin.h"
 
 
-    
+AnalogInputPin::AnalogInputPin(uint8_t number, AnalogInputType analogType)
+{
+  this->number      = number;
+  this->analogType  = analogtype;
+  this->type        = AnalogInputPin;
+}
+
 float AnalogInputPin::getOriginalValue() {
   return this->value;
 }
@@ -13,19 +19,19 @@ float AnalogInputPin::getValue() {
     case TEMPERATURE_CELSIUS:
       return getValueTempCelsuis();
       break;
-      
+
     case TEMPERATURE_FAHR:
       return getValueTempfahr();
       break;
-      
+
     case HUMIDITY:
       return getValueHumidity();
       break;
-      
+
     case FIRE:
       getValueFire();
       break;
-    
+
     default:
       return this->value;
       break;
@@ -48,9 +54,19 @@ float AnalogInputPin::getValueFire() {
   return this->value;
 }
 
-bool AnalogInputPin::initPin() 
-{
-    // TODO
-    return false;
+AnalogInputType AnalogInputPin::getAnalogType() {
+  return analogType;
 }
 
+bool AnalogInputPin::setPinMode()
+{
+  if (Config::getPinTypeByNumber(this->number) == ANALOG_PIN) {
+    return true;
+  }
+  return false;
+}
+
+void AnalogInputPin::syncValue()
+{
+  this->value = analogRead(this->number);
+}

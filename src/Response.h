@@ -5,13 +5,18 @@
 #include <ArduinoJson.h>
 #include "Config.h"
 
+enum StatusCode:int {
+  Config = 100,  Success = 200, JsonError = 300, Error = 400
+};
+
 class Response {
   public:
     static void requestConfig() {
       StaticJsonBuffer<100> jsonBuffer;
 
       JsonObject& root  = jsonBuffer.createObject();
-      root["type"]      = "request";
+      root["status"]    = (int) Config;
+      root["arduino"]   = "arduino_uno";
       root["id"]        = Config::id;
 
       root.printTo(Serial);
@@ -21,8 +26,8 @@ class Response {
       StaticJsonBuffer<100> jsonBuffer;
 
       JsonObject& root = jsonBuffer.createObject();
-      root["type"] = "success";
-      root["msg"] = msg;
+      root["status"]    = (int) Success;
+      root["req"] = msg;
 
       root.printTo(Serial);
     }
@@ -31,8 +36,18 @@ class Response {
       StaticJsonBuffer<100> jsonBuffer;
 
       JsonObject& root = jsonBuffer.createObject();
-      root["type"] = "error";
-      root["msg"] = msg;
+      root["status"]    = (int) Error;
+      root["req"] = msg;
+
+      root.printTo(Serial);
+    }
+
+    static void jsonError(String msg) {
+      StaticJsonBuffer<100> jsonBuffer;
+
+      JsonObject& root = jsonBuffer.createObject();
+      root["status"]    = (int) JsonError;
+      root["req"] = msg;
 
       root.printTo(Serial);
     }

@@ -1,10 +1,13 @@
 #ifndef DigitalDHTPin_H
 #define DigitalDHTPin_H
 #include "../Pin.h"
+#include <DHT.h>
 
-typedef struct DHT DHT;
+#define DHTTYPE DHT11
 
-struct DHT {
+typedef struct DhtValue DhtValue;
+
+struct DhtValue {
   float            temperature;       // Value of the pin float
   float            humidity;       // Value of the pin float
 };
@@ -12,16 +15,19 @@ struct DHT {
 class DigitalDHTPin : public Pin
 {
   protected:
-    DHT    value;
+    DhtValue    value;
+    DHT         dht;
 
   public:
-    DHT getValue();
+    DigitalDHTPin(uint8_t);
+
+    DhtValue getValue();
 
     float getTemperature();
 
     float getHumidity();
 
-    bool initPin();
+    bool setPinMode();
 };
 
 #endif // DigitalDHTPin_H

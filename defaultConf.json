@@ -1,17 +1,48 @@
 {
-  "timer" : 3,
-  "pins"  : [
-    {
-      "name"    : "PIN 01",
-      "number"  : 2,
-      "type"    : "DIGITAL_OUTPUT",
-      "enabled" : true
-    },
-    {
-      "name"    : "PIN 01",
-      "number"  : "A2",
-      "type"    : "ANALOG_INPUT",
-      "enabled" : true
-    }
-  ],
+  "command" : "10",
+  "stats"   : {
+    "timer" : 3,
+    "pins"  : [
+      {
+        "number"  : "2",
+        "type"    : "1"
+      },
+      {
+        "number"  : "2",
+        "type"    : "1"
+      },
+      {
+        "number"  : "2",
+        "type"    : "1"
+      },
+      {
+        "number"  : "3",
+        "type"    : "0"
+      },
+      {
+        "number"  : "4",
+        "type"    : "1"
+      },
+      {
+        "number"  : "5",
+        "type"    : "0"
+      },
+      {
+        "number"  : "6",
+        "type"    : "1"
+      },
+      {
+        "number"  : "7",
+        "type"    : "0"
+      },
+      {
+        "number"  : "8",
+        "type"    : "1"
+      },
+      {
+        "number"  : "9",
+        "type"    : "0"
+      }
+    ]
+  }
 }

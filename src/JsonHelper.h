@@ -7,6 +7,9 @@
 #include <Arduino.h>
 #include <ArduinoJson.h>
 #include "./Pin/Pin.h"
+#include "./Pin/AnalogInputPin/AnalogInputPin.h"
+#include "./Pin/DigitalOutputPin/DigitalOutputPin.h"
+#include "./Pin/DigitalDHTPin/DigitalDHTPin.h"
 
 class JsonHelper {
 
@@ -18,15 +21,13 @@ class JsonHelper {
 
     static JsonObject& pinToJson(Pin pin);
 
-    static bool isValidJson(JsonObject& json);
-
-    static bool isValidCommand(JsonObject& json);
+    static bool isValidInitStatsCommand(JsonObject& json);
 
     static bool isPin(JsonObject& json);
 
-    static bool haveCommand(JsonObject& json);
+    static bool havePinArray(JsonObject& json);
 
-    static bool haveConfig(JsonObject& json);
+    static bool haveCommand(JsonObject& json);
 
     static bool haveStats(JsonObject& json);
 

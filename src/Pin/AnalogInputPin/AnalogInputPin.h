@@ -1,8 +1,9 @@
 #ifndef AnalogInputPin_H
 #define AnalogInputPin_H
 #include "../Pin.h"
+#include "../../Config.h"
 
-enum AnalogInputType { TEMPERATURE_CELSIUS, TEMPERATURE_FAHR, HUMIDITY, FIRE};
+enum AnalogInputType:int { TEMPERATURE_CELSIUS = 0, TEMPERATURE_FAHR = 1, HUMIDITY = 2, FIRE = 3};
 
 class AnalogInputPin : public Pin
 {
@@ -11,6 +12,8 @@ class AnalogInputPin : public Pin
     AnalogInputType  analogType;  // Type (Temperature, Humidity, Fire etc ...)
 
   public:
+    AnalogInputPin(uint8_t , AnalogInputType);
+
     float getOriginalValue();
 
     float getValue();
@@ -23,7 +26,11 @@ class AnalogInputPin : public Pin
 
     float getValueFire();
 
-    bool initPin();
+    AnalogInputType getAnalogType();
+
+    bool setPinMode();
+
+    void syncValue();
 };
 
 #endif // AnalogInputPin_H

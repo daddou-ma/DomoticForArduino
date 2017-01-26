@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-enum PinType {DIGITAL_OUTPUT = 1, ANALOG_INPUT = 2, REMOTE_LED_OUTPUT, DHT11_INPUT, TEMPERATURE_ANALOG_INPUT, HUMIDITY_ANALOG_INPUT, NullType};
+enum PinType:int {DIGITAL_OUTPUT = 0, ANALOG_INPUT = 1, DHT_INPUT = 2, NullType = -1};
 
 class Pin {
   public:
@@ -12,7 +12,7 @@ class Pin {
     PinType  type;    // Type of Pin (INPUT or OUTPUT)
 
     Pin(uint8_t , PinType);
-    static PinType getPinTypeFromString(String type);
+    bool setPinMode();
 };
 
 #endif // Pin_H

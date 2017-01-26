@@ -1,9 +1,12 @@
 #include <Arduino.h>
-
 #include "DigitalDHTPin.h"
 
+DigitalDHTPin::DigitalDHTPin(uint8_t number) {
+  this->number = number;
+  this->type   = DHT_INPUT;
+}
 
-DHT DigitalDHTPin::getValue() {
+DhtValue DigitalDHTPin::getValue() {
   return this->value;
 }
 
@@ -15,8 +18,16 @@ float DigitalDHTPin::getHumidity() {
   return this->value.humidity;
 }
 
-bool DigitalDHTPin::initPin()
+bool DigitalDHTPin::setPinMode()
 {
-    // TODO
-    return false;
+  dht(this->number, DHTTYPE))
+  dht.begin();
+
+  return true;
+}
+
+void DigitalDHTPin::syncValue()
+{
+    this->value.temperature = this->dht.readTemperature();
+    this->value.humidity = this->dht.readHumidity();
 }

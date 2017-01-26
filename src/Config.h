@@ -10,8 +10,8 @@
 #define ANALOG_PIN_COUNT    6
 #define RESERVED_PIN_COUNT  2
 
-enum DataTypePin {
-  ANALOG_PIN, DIGITAL_PIN, RESERVED_PIN
+enum DataTypePin:int {
+  ANALOG_PIN = 0, DIGITAL_PIN = 1, RESERVED_PIN = 2
 };
 
 class Config

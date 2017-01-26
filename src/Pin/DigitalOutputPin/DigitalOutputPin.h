@@ -8,11 +8,13 @@ class DigitalOutputPin : public Pin
     bool  value;   // Value of the pin HIGH or LOW
 
   public:
+    DigitalOutputPin(uint8_t);
+
     bool getValue();
 
     void setValue(bool val);
 
-    bool initPin();
+    bool setPinMode();
 };
 
 #endif // DigitalOutputPin_H

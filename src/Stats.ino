@@ -13,19 +13,6 @@ Pin  Stats::pinsArray[COUNT_PIN] = {  Pin(0 , DIGITAL_OUTPUT),
 bool Stats::pinsStats[COUNT_PIN];
 int  Stats::timer = 3;
 
-bool Stats::setStats(JsonObject& json) {
-  // TODO : verification of validation of a json
-
-  Stats::timer = json["timer"];
-  JsonArray& pins = json["pins"];
-
-  for (unsigned int i = 0; i < pins.size(); i++) {
-    Pin pin = Pin(pins[i]["number"], Pin::getPinTypeFromString(pins[i]["type"]));
-  }
-
-  return 0;
-}
-
 JsonObject& Stats::getStats() {
   // TODO
   StaticJsonBuffer<1024> jsonBuffer;
@@ -36,7 +23,7 @@ JsonObject& Stats::getStats() {
     if(Config::getPinTypeByNumber(pinsArray[i].number) != RESERVED_PIN) {
       JsonObject& pin = pins.createNestedObject();
       pin["pin"] = pinsArray[i].number;
-      pin["type"] = pinsArray[i].type;
+      pin["type"] = (int)pinsArray[i].type;
       pin["value"] = pinsArray[i].value;
     }
   }
@@ -56,7 +43,9 @@ bool Stats::initStats(JsonObject& json) {
   for (unsigned int i = 0; i < pins.size(); i++) {
     if (JsonHelper::isPin(pins[i]))
     {
-      Pin pin = Pin(pins[i]["number"], Pin::getPinTypeFromString(pins[i]["type"]));
+      int number = json["number"];
+      int type   = json["type"];
+      Pin pin = Pin(number, (PinType)type);
     }
     else {
       return false;
@@ -64,10 +53,4 @@ bool Stats::initStats(JsonObject& json) {
   }
 
   return true;
-}
-
-void Stats::resetStats() {
-  for (int i = 0; i < COUNT_PIN; i++) {
-
-  }
 }

@@ -1,23 +1,35 @@
-#include <Commands.h>
+#include "Commands.h"
 
-CommandEnum Commands::getEnum(String command) {
+void Commands::execCommand(CommandEnum command, JsonObject& json) {
 
-  if (command == "getStats") {
-    return getStats;
+  switch (command) {
+    case CommandEnum::initStats:
+      initStats(json);
+    break;
+    case CommandEnum::setPin:
+      // TODO : function
+    break;
+    case CommandEnum::setTimer:
+      // TODO : function
+    break;
+    case CommandEnum::NullCommand:
+    default:
+      // TODO : function
+    break;
   }
-  else if (command == "setStats") {
-    return setStats;
-  }
-  else if (command == "getPin") {
-    return getPin;
-  }
-  else if (command == "setPin") {
-    return setPin;
-  }
-  else if (command == "setTimer") {
-    return setTimer;
+}
+
+
+void Commands::initStats(JsonObject& json) {
+  if (JsonHelper::isValidInitStatsCommand(json)) {
+    if (Stats::initStats(json)) {
+      Response::success("Stats Init Done");
+    }
+    else {
+      Response::success("Error in initStats");
+    }
   }
   else {
-    return NullCommand;
+    Response::success("Unvalid Json !");
   }
 }

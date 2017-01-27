@@ -10,13 +10,13 @@ JsonObject& JsonHelper::getJson(String text) {
 }
 
 Pin JsonHelper::jsonToPin(JsonObject& json) {
-  uint8_t number    = json["number"];
-  uint8_t type      = json["type"];
+  uint8_t number    = json[F("number")];
+  uint8_t type      = json[F("type")];
 
   switch ((PinType) type) {
     case DIGITAL_OUTPUT:
     {
-      uint8_t value = json["value"];
+      uint8_t value = json[F("value")];
       DigitalOutputPin pin = DigitalOutputPin(number);
       pin.setValue(value);
       return pin;
@@ -24,7 +24,7 @@ Pin JsonHelper::jsonToPin(JsonObject& json) {
     break;
     case ANALOG_INPUT:
     {
-      uint8_t  analogType = (uint8_t) json["analog_type"];
+      uint8_t  analogType = (uint8_t) json[F("analog_type")];
       AnalogInputPin pin = AnalogInputPin(number, (AnalogInputType) analogType);
       return pin;
     }
@@ -46,27 +46,27 @@ JsonObject& JsonHelper::pinToJson(Pin pin) {
   StaticJsonBuffer<50> jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();
 
-  root["number"]  = pin.number;
-  root["type"]    = (uint8_t)pin.type;
+  root[F("number")]  = pin.number;
+  root[F("type")]    = (uint8_t)pin.type;
 
   switch (pin.type) {
     case DIGITAL_OUTPUT:
     {
       DigitalOutputPin pin = (DigitalOutputPin)pin;
-      root["value"]   = pin.getValue();
+      root[F("value")]   = pin.getValue();
     }
     break;
     case ANALOG_INPUT:
     {
       AnalogInputPin pin = (AnalogInputPin)pin;
-      root["analog_type"]   = pin.getAnalogType();
+      root[F("analog_type")]   = pin.getAnalogType();
     }
     break;
     case DHT_INPUT:
     {
       DigitalDHTPin pin = (DigitalDHTPin)pin;
-      root["temperature"]   = pin.getValue().temperature;
-      root["humidity"]      = pin.getValue().humidity;
+      root[F("temperature")]   = pin.getValue().temperature;
+      root[F("humidity")]      = pin.getValue().humidity;
     }
     break;
   }
@@ -80,7 +80,7 @@ bool JsonHelper::isValidInitStatsCommand(JsonObject& json) {
     return false;
   }
 
-  JsonObject& stats = json["stats"];
+  JsonObject& stats = json[F("stats")];
 
   if(!haveTimer(stats)) {
     return false;
@@ -94,7 +94,7 @@ bool JsonHelper::isValidInitStatsCommand(JsonObject& json) {
 }
 
 bool JsonHelper::haveCommand(JsonObject& json){
-  if (json.containsKey("command")) {
+  if (json.containsKey(F("command"))) {
     return true;
   }
   return false;
@@ -103,23 +103,23 @@ bool JsonHelper::haveCommand(JsonObject& json){
 bool JsonHelper::isPin(JsonObject& json){
 
   // Verify Basic Pin
-  if (!json.containsKey("number") || !json.containsKey("type")) {
+  if (!json.containsKey(F("number")) || !json.containsKey(F("type"))) {
     return false;
   }
 
   // Verify Pin according to his type
-  uint8_t type = (uint8_t) json["type"];
+  uint8_t type = (uint8_t) json[F("type")];
   switch ((PinType) type) {
     case DIGITAL_OUTPUT:
       // Do Nothing (Return true)
     break;
     case ANALOG_INPUT:
-      if (!json.containsKey("analog_type")) {
+      if (!json.containsKey(F("analog_type"))) {
         return false;
       }
     break;
     case DHT_INPUT:
-      if (!json.containsKey("temperature") || !json.containsKey("humidity")) {
+      if (!json.containsKey(F("temperature")) || !json.containsKey(F("humidity"))) {
         return false;
       }
     break;
@@ -132,12 +132,12 @@ bool JsonHelper::isPin(JsonObject& json){
 
 bool JsonHelper::havePinArray(JsonObject& json){
 
-  if (!json.containsKey("pins")) {
+  if (!json.containsKey(F("pins"))) {
     return false;
   }
 
-  JsonArray& pins = json.createNestedArray("pins");
-  if (pins.size() > Config::countPin) {
+  JsonArray& pins = json.createNestedArray(F("pins"));
+  if (pins.size() > COUNT_PIN) {
     return false;
   }
 
@@ -153,15 +153,14 @@ bool JsonHelper::havePinArray(JsonObject& json){
 
 bool JsonHelper::haveStats(JsonObject& json){
 
-  if (json.containsKey("stats")) {
+  if (json.containsKey(F("stats"))) {
     return true;
   }
   return false;
 }
 
 bool JsonHelper::haveTimer(JsonObject& json){
-
-  if (json.containsKey("timer")) {
+  if (json.containsKey(F("timer"))) {
     return true;
   }
   return false;

@@ -23,10 +23,6 @@ class DigitalDHTPin : public Pin
 
     DhtValue getValue();
 
-    float getTemperature();
-
-    float getHumidity();
-
     bool setPinMode();
 };
 

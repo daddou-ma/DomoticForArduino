@@ -8,9 +8,8 @@
 class Stats {
 
 public:
-  static Pin  pinsArray[COUNT_PIN];
-  static bool pinsStats[COUNT_PIN];
-  static int  timer;
+  static Pin  pinsArray[COUNT_PIN-START_PIN];
+  static uint8_t  timer;
 
   static JsonObject& getStats();
 

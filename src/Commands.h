@@ -10,8 +10,8 @@
   Y : (0: init) (1: get) (2: set)
 */
 
-enum CommandEnum:int {
-  initStats = 10, setPin = 22, setTimer = 32, NullCommand = -1
+enum CommandEnum:uint8_t {
+  initStats = 10, setPin = 22, setTimer = 32, NullCommand = 00
 };
 
 class Commands {

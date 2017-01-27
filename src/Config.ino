@@ -4,8 +4,7 @@
 
 String Config::id    = "000000AA";
 uint8_t Config::timer    = TIMER;
-uint8_t Config::startPin = START_PIN;
-uint8_t Config::countPin = COUNT_PIN;
+
 
 
 DataTypePin Config::getPinTypeByNumber(uint8_t pin) {

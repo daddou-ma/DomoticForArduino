@@ -5,8 +5,8 @@
 #include <ArduinoJson.h>
 #include "Config.h"
 
-enum StatusCode:int {
-  Config = 100,  Success = 200, JsonError = 300, Error = 400
+enum StatusCode:uint8_t {
+  Config = 10,  Success = 20, JsonError = 30, Error = 40
 };
 
 class Response {
@@ -15,9 +15,9 @@ class Response {
       StaticJsonBuffer<50> jsonBuffer;
 
       JsonObject& root  = jsonBuffer.createObject();
-      root["status"]    = (uint8_t) Config;
-      root["arduino"]   = "arduino_uno";
-      root["id"]        = Config::id;
+      root[F("status")]    = (uint8_t) Config;
+      root[F("arduino")]   = F("arduino_uno");
+      root[F("id")]        = Config::id;
 
       root.printTo(Serial);
     }
@@ -26,8 +26,8 @@ class Response {
       StaticJsonBuffer<50> jsonBuffer;
 
       JsonObject& root = jsonBuffer.createObject();
-      root["status"]    = (uint8_t) code;
-      root["req"] = request;
+      root[F("status")]    = (uint8_t) code;
+      root[F("req")] = request;
 
       root.printTo(Serial);
     }

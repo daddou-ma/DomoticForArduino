@@ -3,7 +3,7 @@
 #include "../Pin.h"
 #include "../../Config.h"
 
-enum AnalogInputType:int { TEMPERATURE_CELSIUS = 0, TEMPERATURE_FAHR = 1, HUMIDITY = 2, FIRE = 3};
+enum AnalogInputType:uint8_t { TEMPERATURE_CELSIUS = 0, TEMPERATURE_FAHR = 1, HUMIDITY = 2, FIRE = 3};
 
 class AnalogInputPin : public Pin
 {
@@ -14,17 +14,7 @@ class AnalogInputPin : public Pin
   public:
     AnalogInputPin(uint8_t , AnalogInputType);
 
-    float getOriginalValue();
-
     float getValue();
-
-    float getValueTempCelsuis();
-
-    float getValueTempfahr();
-
-    float getValueHumidity();
-
-    float getValueFire();
 
     AnalogInputType getAnalogType();
 

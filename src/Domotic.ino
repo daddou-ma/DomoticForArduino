@@ -11,7 +11,6 @@
 bool connected  = false;
 
 uint8_t 		i = 0;
-//Pin 		pins[PIN_COUNT];
 
 // the setup routine runs once when you press reset:
 void setup() {
@@ -22,9 +21,14 @@ void setup() {
     Response::requestConfig();
 
     // Waiting For Configuration From Serial Port
-    while (Serial.available() > 0) {
+    if (Serial.available() > 0) {
 
-      String text = Serial.readStrin
+      char text[15];
+      int j = 0;
+      while(Serial.available() > 0) {
+        text[j] = (char) Serial.read();
+        j++;
+      }
 
       JsonObject& json = JsonHelper::getJson(text);
 
@@ -33,9 +37,14 @@ void setup() {
         Response::message(StatusCode::JsonError, 0);
       }
       else {
-        int command = json["command"];
-        Commands::execCommand((CommandEnum)command, json);
-        connected = true;
+        int command = json[F("command")];
+        if (JsonHelper::isValidInitStatsCommand(json)) {
+          Commands::execCommand((CommandEnum)command, json);
+          connected = true;
+        }
+        else {
+          Response::message(StatusCode::Error, 0);
+        }
       }
     }
     delay(500);
@@ -55,27 +64,20 @@ void loop() {
       //Serial.println("NOT JSON");
       return;
     }
-    int command = json["command"];
+    int command = json[F("command")];
     switch((CommandEnum)command) {
       case initStats:
         // TODO : Set Stats
-        //Serial.println("Init Stats : Command Received");
         break;
       case setPin:
         // TODO : Set Pin
-        //Serial.println("Set Pin : Command Received");
         break;
       case setTimer:
         // TODO : Set Pin
-        //Serial.println("Set Timer : Command Received");
         break;
       case NullCommand:
-        // TODO : Error Message
-        //Serial.println("Unknown Command");
-        break;
       default:
         // TODO : Error Message
-        //Serial.println("Unknown Command");
         break;
     }
   }

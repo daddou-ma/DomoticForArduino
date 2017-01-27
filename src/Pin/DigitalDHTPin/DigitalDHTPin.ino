@@ -10,14 +10,6 @@ DhtValue DigitalDHTPin::getValue() {
   return this->value;
 }
 
-float DigitalDHTPin::getTemperature() {
-  return this->value.temperature;
-}
-
-float DigitalDHTPin::getHumidity() {
-  return this->value.humidity;
-}
-
 bool DigitalDHTPin::setPinMode()
 {
   dht(this->number, DHTTYPE))
